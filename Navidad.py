@@ -58,6 +58,22 @@ with st.empty():
         st.markdown("❄️ ❄️ ❄️ ❄️ ❄️")
         time.sleep(0.5)
 
+# 🎵 Música navideña
+st.markdown("### 🎶 Música de Navidad")
+
+st.markdown("""
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/VjL031bE9FA?autoplay=1&mute=1&loop=1&playlist=VjL031bE9FA"
+frameborder="0"
+allow="autoplay">
+</iframe>
+""", unsafe_allow_html=True)
+
+st.info("🔊 Toca el video para escuchar a Rodolfo el Reno 🎅🦌")
+
+st.video("https://www.youtube.com/watch?v=uArFYpxDOoU&list=RDuArFYpxDOoU&start_radio=1",)
+    
+
 # Mensaje final
 st.markdown(
     "<p style='text-align:center; font-size:20px;'>🎁 Santa ya viene en camino...</p>",
