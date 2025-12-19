@@ -1,36 +1,41 @@
 import streamlit as st
 import datetime
-import time
+from zoneinfo import ZoneInfo
 
-# Configuración de la página (muy importante para celular)
+# 🔄 Auto refresco cada segundo (oficial)
+from streamlit_autorefresh import st_autorefresh
+st_autorefresh(interval=1000, key="contador_navidad")
+
+# Configuración para celular
 st.set_page_config(
-    page_title="Cuenta regresiva 🎄",
+    page_title="Navidad de Tommy 🎄",
     page_icon="🎅",
     layout="centered"
 )
 
-# Fecha actual y Navidad
-today = datetime.date.today()
-xmas = datetime.date(today.year, 12, 25)
+# Hora de Costa Rica
+cr_now = datetime.datetime.now(ZoneInfo("America/Costa_Rica"))
+today = cr_now.date()
 
-# Si ya pasó Navidad, usar el próximo año
+# Próxima Navidad
+xmas = datetime.date(today.year, 12, 25)
 if today > xmas:
     xmas = datetime.date(today.year + 1, 12, 25)
 
+# Conteo estable (solo días)
 days_left = (xmas - today).days
 
-# Título grande
+# 🎄 UI
 st.markdown(
-    "<h1 style='text-align: center; color: red;'>🎄 ¡Hola Tommy! 🎄</h1>",
+    "<h1 style='text-align:center; color:red;'>🎄 ¡Hola Tommy! 🎄</h1>",
     unsafe_allow_html=True
 )
 
 st.markdown(
-    "<h2 style='text-align: center;'>Faltan...</h2>",
+    "<h3 style='text-align:center;'>Faltan</h3>",
     unsafe_allow_html=True
 )
 
-# Número grande (impacto visual)
 st.markdown(
     f"""
     <div style="text-align:center; font-size:80px; font-weight:bold; color:green;">
@@ -43,24 +48,22 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Animaciones
+if days_left <= 10:
+    st.snow()
+
+if days_left == 0:
+    st.balloons()
+    st.markdown(
+        "<h2 style='text-align:center;'>🎉 ¡HOY ES NAVIDAD! 🎁</h2>",
+        unsafe_allow_html=True
+    )
+
 # Barra de progreso
-total_days = 365
-progress = int((total_days - days_left) / total_days * 100)
+progress = int((365 - days_left) / 365 * 100)
 st.progress(progress)
 
-# Animación simple
-if days_left <= 10:
-    st.balloons()  # confeti 🎈
-
-# Pequeña animación tipo "nieve"
-with st.empty():
-    for _ in range(3):
-        st.markdown("❄️ ❄️ ❄️ ❄️ ❄️")
-        time.sleep(0.5)
-
-# 🎵 Música navideña
-st.markdown("### 🎶 Música de Navidad")
-
+# 🎵 Rodolfo el Reno (autoplay silencioso)
 st.markdown("""
 <iframe width="0" height="0"
 src="https://www.youtube.com/embed/VjL031bE9FA?autoplay=1&mute=1&loop=1&playlist=VjL031bE9FA"
@@ -69,13 +72,6 @@ allow="autoplay">
 </iframe>
 """, unsafe_allow_html=True)
 
-st.info("🔊 Toca el video para escuchar a Rodolfo el Reno 🎅🦌")
+st.info("🔊 Toca ▶️ para escuchar a Rodolfo el Reno 🎶")
 
-st.video("https://www.youtube.com/watch?v=uArFYpxDOoU&list=RDuArFYpxDOoU&start_radio=1",)
-    
-
-# Mensaje final
-st.markdown(
-    "<p style='text-align:center; font-size:20px;'>🎁 Santa ya viene en camino...</p>",
-    unsafe_allow_html=True
-)
+st.video("https://www.youtube.com/watch?v=VjL031bE9FA")
